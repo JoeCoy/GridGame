@@ -5,12 +5,18 @@ import static helpers.Clock.*;
 import static helpers.Artist.*;
 
 public class Character {
-	private int width, height, hp, attack, defense, damage;
+	private int width, height, hp, attack, defense, damage, speed;
 	private String direction = null;
 	float x, y, destX, destY;
 	Texture texture;
+	private boolean activated;
+	public Player player = null;
+	private boolean finished;
+	public int movesLeft = 0;
 	
-	public Character(Texture texture, Tile startTile, int width, int height, float speed)
+	
+	
+	public Character(Texture texture, Tile startTile, int width, int height, int speed)
 	{
 		startTile.setOccupied(true);
 		startTile.setCharacterAtTile(this);
@@ -21,7 +27,44 @@ public class Character {
 		this.destY = y;
 		this.width = width;
 		this.height = height;
-		
+		activated = false;
+		finished = false;
+		this.speed = speed;
+	}
+	
+	public void finish()
+	{
+		finished = true;
+		player.numActivations--;
+		player.deselect();
+		if (player.isTurnOver())
+		{
+			player.endTurn();
+		}
+	}
+	
+	public boolean isFinished()
+	{
+		return finished;
+	}
+	
+	public void deactivate()
+	{
+		//activated = true;
+		finish();
+	}
+	
+	public void activate()
+	{
+		activated = true;
+		finished = false;
+		movesLeft = speed*2;
+		System.out.print("moves left: " + movesLeft + "\n");
+	}
+	
+	public boolean isActivated()
+	{
+		return activated;
 	}
 	
 	public void Update()
@@ -113,6 +156,9 @@ public class Character {
 		this.destY = tile.getY();
 		tile.setOccupied(true);
 		tile.setCharacterAtTile(this);
+		movesLeft--;
+		if (movesLeft == 0)
+			this.deactivate();
 	}
 	
 	public Tile getTile(TileGrid t)

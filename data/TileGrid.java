@@ -1,9 +1,11 @@
 package data;
 
+import java.util.ArrayList;
+
 public class TileGrid {
 	public Tile[][] map;
 	public static final int WIDTH = 20, HEIGHT = 15;
-	
+	public ArrayList<Character> characters;
 	
 	public TileGrid()
 	{
@@ -15,6 +17,7 @@ public class TileGrid {
 				map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Floor);
 			}
 		}
+		characters = new ArrayList<Character>();
 	}
 	
 	public TileGrid(int[][] newMap)
@@ -35,6 +38,7 @@ public class TileGrid {
 				}
 			}
 		}
+		characters = new ArrayList<Character>();
 	}
 
 	public void setTile(int xCoord, int yCoord, TileType type)
@@ -56,6 +60,11 @@ public class TileGrid {
 				Tile t = map[i][j];
 				t.Draw();
 			}
+		}
+		for (Character c: characters)
+		{
+			c.Draw();
+			c.Update();
 		}
 	}
 
