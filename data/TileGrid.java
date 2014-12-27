@@ -6,6 +6,7 @@ public class TileGrid {
 	public Tile[][] map;
 	public static final int WIDTH = 20, HEIGHT = 15;
 	public ArrayList<Character> characters;
+	public Menu menu;
 	
 	public TileGrid()
 	{

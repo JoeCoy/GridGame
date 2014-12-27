@@ -17,7 +17,17 @@ public class StartPlayerButton implements ActionListener{
         //numClicks++;
 		if (menu.getActivePlayer() == null)
 		{
-			menu.activePlayer = menu.player1;
+			menu.activePlayer = menu.nextPlayer;
+			
+			if (menu.nextPlayer == menu.player1)
+			{
+				menu.nextPlayer = menu.player2;
+			}
+			else
+			{
+				menu.nextPlayer = menu.player1;
+			}
+			
 			menu.getActivePlayer().takeTurn();
 			menu.text.setText("Number of Activations: " + menu.getActivePlayer().numActivations);
 		}

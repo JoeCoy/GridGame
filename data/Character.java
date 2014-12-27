@@ -13,10 +13,10 @@ public class Character {
 	public Player player = null;
 	private boolean finished;
 	public int movesLeft = 0;
+	private String name;
 	
 	
-	
-	public Character(Texture texture, Tile startTile, int width, int height, int speed)
+	public Character(String name, Texture texture, Tile startTile, int width, int height, int speed)
 	{
 		startTile.setOccupied(true);
 		startTile.setCharacterAtTile(this);
@@ -30,6 +30,12 @@ public class Character {
 		activated = false;
 		finished = false;
 		this.speed = speed;
+		this.name = name;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 	public void finish()
@@ -59,7 +65,7 @@ public class Character {
 		activated = true;
 		finished = false;
 		movesLeft = speed*2;
-		System.out.print("moves left: " + movesLeft + "\n");
+		//System.out.print("moves left: " + movesLeft + "\n");
 	}
 	
 	public boolean isActivated()
@@ -109,7 +115,7 @@ public class Character {
 	
 	public void move(TileGrid t, String dir)
 	{
-		if (direction != null)
+		if (direction != null || this.movesLeft == 0)
 		{
 			//do nothing
 		}
@@ -157,8 +163,9 @@ public class Character {
 		tile.setOccupied(true);
 		tile.setCharacterAtTile(this);
 		movesLeft--;
-		if (movesLeft == 0)
-			this.deactivate();
+		this.player.getTileGrid().menu.text.setText("Moves Left: " + movesLeft);
+		//if (movesLeft == 0)
+		//	this.deactivate();
 	}
 	
 	public Tile getTile(TileGrid t)

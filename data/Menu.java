@@ -17,9 +17,11 @@ public class Menu extends Frame implements ActionListener, WindowListener {
     Button endCharacterButton;
     Player activePlayer = null;
     public Player player1;
+    public Player player2;
+    public Player nextPlayer;
     //private int numClicks = 0;
 
-    public Menu(String title, Player player1) {
+    public Menu(String title, Player player1, Player player2) {
 
             super(title);
             setLayout(new FlowLayout());
@@ -37,11 +39,17 @@ public class Menu extends Frame implements ActionListener, WindowListener {
             add(activateButton);
             activateButton.addActionListener(this);
             this.player1 = player1;
+            this.player2 = player2;
+            nextPlayer = player1;
             
             //end character button
             endCharacterButton = new Button("End character's turn");
             add(endCharacterButton);
             endCharacterButton.addActionListener(new EndCharacterButton(this));
+            
+            Button endPlayerButton = new Button("End Player's turn");
+            add(endPlayerButton);
+            endPlayerButton.addActionListener(new EndPlayerButton(this));
             
             
 
@@ -62,12 +70,19 @@ public class Menu extends Frame implements ActionListener, WindowListener {
     		//getActivePlayer().takeTurn(); //will probably be replaced
     	if (activePlayer != null)
     	{
-    		getActivePlayer().setReadyToSelect(true);
-            text.setText("select a character");
+    		if (activePlayer.numActivations > 0)
+    		{
+    			getActivePlayer().setReadyToSelect(true);
+    			text.setText("Select a character");
+    		}
+    		else
+    		{
+    			text.setText("No activations left");
+    		}
     	}
     	else
     	{
-    		text.setText("you must start your turn first");
+    		text.setText("You must start your turn first");
     	}
     }
 

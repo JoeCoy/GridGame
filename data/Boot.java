@@ -48,20 +48,29 @@ public class Boot {
 		
 		grid = new TileGrid(map);
 		grid.setTile(3, 3, grid.getTile(4,3).getType());
-		Character e = new Character(QuickLoad("character"), grid.getTile(10, 10), 64, 64, 6);
-		Character d = new Character(QuickLoad("character"), grid.getTile(1, 1), 64, 64, 6);
+		Character e = new Character("Trooper", QuickLoad("character"), grid.getTile(10, 10), 64, 64, 6);
+		Character d = new Character("Soldier", QuickLoad("character"), grid.getTile(10, 11), 64, 64, 6);
+		Character x = new Character("Trooper", QuickLoad("characterRed"), grid.getTile(1, 1), 64, 64, 6);
+		Character y = new Character("Soldier", QuickLoad("characterRed"), grid.getTile(1, 2), 64, 64, 6);
 		Player player1 = new Player(grid);
 		Player player2 = new Player(grid);
 		
 		player1.addCharacter(e);
 		player1.addCharacter(d);
 		
+		player2.addCharacter(x);
+		player2.addCharacter(y);
+		
 		grid.characters.add(d);
 		grid.characters.add(e);
+		grid.characters.add(x);
+		grid.characters.add(y);
 		
-		menu = new Menu("Menu", player1);
+		menu = new Menu("Menu", player1, player2);
 		menu.setSize(250, 100);
 		menu.setVisible(true);
+		
+		grid.menu = menu;
 		
 		while(!Display.isCloseRequested())
 		{

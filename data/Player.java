@@ -89,7 +89,7 @@ public class Player {
 				if (grid.getTile(x, y).isOccupied())
 				{
 					Character c = grid.getTile(x, y).getCharacterAtTile();
-					if (!c.isActivated())
+					if (!c.isActivated() && characters.contains(c))
 					{
 						if (currentSelection != null)
 							currentSelection.deactivate();
@@ -97,6 +97,7 @@ public class Player {
 						currentSelection = c;
 						c.activate();
 						this.setReadyToSelect(false);
+						this.getTileGrid().menu.text.setText(c.getName() + " selected");
 					}
 					//grid.setTile(x, y, TileType.Wall);
 				}
